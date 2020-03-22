@@ -6,7 +6,6 @@
 
 #include "panoply.h"
 
-
 void
 service_panoply_1(char *host)
 {
@@ -81,10 +80,10 @@ service_panoply_1(char *host)
 
 
 	printf("Connexion\n");
-	printf("Entrez votre adresse mail :\n");
-	scanf("%s",log_in_1_arg.email.email);
-	printf("Entrez votre mot de passe :\n");
-	scanf("%s",log_in_1_arg.mdp.mdp);	
+	printf("Adresse mail : tomkimsour@hotmail.fr\n");
+	strcpy(log_in_1_arg.email.email,"tomkimsour@hotmail.fr");
+	printf("Mot de passe : tom\n");
+	strcpy(log_in_1_arg.mdp.mdp,"tom");	
 	result_3 = log_in_1(&log_in_1_arg, clnt);
 	if (result_3 == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
@@ -106,11 +105,10 @@ service_panoply_1(char *host)
 	printf("---------------------------------------------------\n");
 
 	int id_abonnement;
-	printf("Quel abonnement choisissez vous ?\n");
-	scanf("%d",&id_abonnement);
-	result_2->abonnement_suivi.id_abo=id_abonnement;
+	printf("Abonnement choisi : 2\n");
+	result_2->abonnement_suivi=result_4->abonnements[1];
 
-	result_5 = affecter_abo_client_1(&affecter_abo_client_1_arg, clnt);
+	result_5 = affecter_abo_client_1(result_2, clnt);
 	if (result_5 == (compte *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
@@ -130,10 +128,8 @@ service_panoply_1(char *host)
 
 	printf("---------------------------------------------------\n");
 
-	printf("Veuillez choisir l'identifiant d'une collection à parcourir\n");
-	int identifiant_collection;
-	scanf("%d",&identifiant_collection);
-	list_all_collection_clothes_1_arg.id_collection=identifiant_collection;
+	printf("Identifiant d'une collection à parcourir : 0 \n");
+	list_all_collection_clothes_1_arg.id_collection=0;
 	result_7 = list_all_collection_clothes_1(&list_all_collection_clothes_1_arg, clnt);
 	if (result_7 == (article_list *) NULL) {
 		clnt_perror (clnt, "call failed");
@@ -146,11 +142,10 @@ service_panoply_1(char *host)
 	printf("---------------------------------------------------\n");
 
 	printf("Veuillez choisir l'id de l'article à ajouter au panier\n");
-	int id_article;
-	scanf("%d",&id_article);
+	printf("Ajout de l'article d'identifiant 0\n");
 	panier.id_cart=*result_3;
 	panier.nbArticle=1;
-	panier.list_article[1].id_article=id_article;
+	panier.list_article[0]=result_7->article[0];
 	result_8 = add_to_cart_1(&panier, clnt);
 	if (result_8 == (cart *) NULL) {
 		clnt_perror (clnt, "call failed");

@@ -6,11 +6,11 @@
 
 #include "panoply.h"
 panoply * database;
+
 void *
 init_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static char * result;
-
 
 	database=malloc(sizeof(panoply));
 
@@ -70,7 +70,7 @@ init_1_svc(void *argp, struct svc_req *rqstp)
         strcpy(database->marques.brands[1].description,"Formé aux côtés de Hedi Slimane chez Dior, Alexis Mabille s'intéresse particulièrement à l'androgynie et aux frontières du masculin et du féminin. Il lance sa griffe en 2005 et crée des collections unisexes remarquées du milieu de la mode. Il revisite le nœud papillon en jouant sur les volumes et cet accessoire désuet devient sa marque de fabrique.");
 
     /*init articles*/
-    database->articles.nb_different_article=5;
+    database->articles.nb_different_article=1;
    
        /* ~Article n°1~ */
        database->articles.article[0].id_article = 0; 
@@ -110,6 +110,7 @@ init_1_svc(void *argp, struct svc_req *rqstp)
     database->commandes.nbCommande=0;
 	printf("Fin de l'initialisation\n");
 
+
 	return (void *) &result;
 }
 
@@ -117,12 +118,13 @@ compte *
 create_account_1_svc(compte *argp, struct svc_req *rqstp)
 {
 	static compte  result;
-
+	printf("---------------------------------------------------\n");
 	printf("Création de compte\n");
 	database->comptes.cmpt[database->comptes.nbCompte]=*argp;
 	database->comptes.cmpt[database->comptes.nbCompte].id_compte=database->comptes.nbCompte;
 	result=database->comptes.cmpt[database->comptes.nbCompte];
 	database->comptes.nbCompte++;
+	printf("Ajout du profil d'id : %d",database->comptes.nbCompte);
 	printf("Fin création de compte\n");
 
 	return &result;
@@ -132,7 +134,7 @@ int *
 log_in_1_svc(identifiants *argp, struct svc_req *rqstp)
 {
 	static int  result;
-
+	printf("---------------------------------------------------\n");
 	result=-1;
 	printf("Connexion\n");
 	printf("nombre de comptes : %d\n",database->comptes.nbCompte);
@@ -154,8 +156,9 @@ log_in_1_svc(identifiants *argp, struct svc_req *rqstp)
 list_abonnement *
 list_type_abo_1_svc(void *argp, struct svc_req *rqstp)
 {
-	printf("Envoie des listes d'abonnement\n");
 	static list_abonnement  result;
+	printf("---------------------------------------------------\n");
+	printf("Envoie des listes d'abonnement\n");
 	if (database == (panoply *)NULL){
 		printf("Ta database n'est pas initialisée");
 	}
@@ -168,7 +171,7 @@ compte *
 affecter_abo_client_1_svc(compte *argp, struct svc_req *rqstp)
 {
 	static compte  result;
-
+	printf("---------------------------------------------------\n");
 	printf("Ajout de l'abonnement");
 	//ajout de l'abonnement
 	int id_user = argp->id_compte;
@@ -190,11 +193,12 @@ list_collection *
 list_all_collection_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static list_collection  result;
-
+	printf("---------------------------------------------------\n");
     printf("Liste les collections\n");
 	printf("Nombre de collections %d\n",database->collections.nb_different_collection);
 	result=database->collections;
     printf("Fin liste collection\n");
+
 	return &result;
 }
 
@@ -202,16 +206,19 @@ article_list *
 list_all_collection_clothes_1_svc(collection *argp, struct svc_req *rqstp)
 {
 	static article_list  result;
-
+	printf("---------------------------------------------------\n");
+	printf("Liste les articles de la collection %d\n",argp->id_collection);
 	result.nb_different_article=0;
 
 	int id_collection=argp->id_collection;
+	printf("Nombre d'articles de la collection : %d\n",database->articles.nb_different_article);
 	for (int i =0 ; i<database->articles.nb_different_article ; i++){
 		if( database->articles.article[i].collection_reference.id_collection == id_collection ){
 			result.article[result.nb_different_article]=database->articles.article[i];
 			result.nb_different_article++;
 		}
 	}
+	printf("Fin du listing\n");
 
 	return &result;
 }
@@ -220,12 +227,19 @@ cart *
 add_to_cart_1_svc(cart *argp, struct svc_req *rqstp)
 {
 	static cart  result;
-
+	printf("---------------------------------------------------\n");
 	int id_commande=argp->id_cart;
 	database->commandes.listCommande[id_commande]=*argp;
 	database->commandes.nbCommande++;
+	printf("Id du nouveau cart : %d\n",database->commandes.listCommande[id_commande].id_cart);
+	printf("Nombre d'articles dans le panier : %d\n",database->commandes.listCommande[id_commande].nbArticle);
+	for(int i = 0 ; i<database->commandes.listCommande[id_commande].nbArticle ; i++ ){
+		printf("Article : %s\n",database->commandes.listCommande[id_commande].list_article[i].nom);
+	}
 
 	result = *argp;
+	printf("Fin du scenario\n");
+	printf("---------------------------------------------------\n");
 	free(database);
 
 	return &result;
