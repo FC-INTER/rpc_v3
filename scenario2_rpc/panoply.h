@@ -23,32 +23,32 @@ struct abonnement {
 typedef struct abonnement abonnement;
 
 struct list_abonnement {
-	struct abonnement abonnements[30];
+	struct abonnement abonnements[5];
 	int nb_different_abonnement;
 };
 typedef struct list_abonnement list_abonnement;
 
 struct collection {
 	int id_collection;
-	char nom_collection[50];
+	char nom_collection[20];
 };
 typedef struct collection collection;
 
 struct list_collection {
-	struct collection collection[50];
+	struct collection collection[5];
 	int nb_different_collection;
 };
 typedef struct list_collection list_collection;
 
 struct brand {
 	int id_brand;
-	char brand_name[32];
-	char description[3000];
+	char brand_name[20];
+	char description[20];
 };
 typedef struct brand brand;
 
 struct list_brand {
-	struct brand brands[124];
+	struct brand brands[5];
 	int nb_different_brand;
 };
 typedef struct list_brand list_brand;
@@ -64,7 +64,7 @@ typedef enum point_livraison point_livraison;
 struct article {
 	int id_article;
 	char nom[32];
-	int taille[20];
+	int taille[5];
 	enum point_livraison pt_livraison;
 	int prix_location;
 	struct collection collection_reference;
@@ -75,7 +75,7 @@ struct article {
 typedef struct article article;
 
 struct article_list {
-	struct article article[150];
+	struct article article[5];
 	int nb_different_article;
 };
 typedef struct article_list article_list;
@@ -91,12 +91,12 @@ enum connu_panoply {
 typedef enum connu_panoply connu_panoply;
 
 struct mail {
-	char email[128];
+	char email[25];
 };
 typedef struct mail mail;
 
 struct mot_de_passe {
-	char mdp[32];
+	char mdp[25];
 };
 typedef struct mot_de_passe mot_de_passe;
 
@@ -117,12 +117,12 @@ struct compte {
 	int id_compte;
 	struct mail email;
 	struct mot_de_passe mdp;
-	char nom[32];
-	char prenom[32];
+	char nom[25];
+	char prenom[25];
 	struct date date_de_naissance;
 	int telephone;
-	char profession[64];
-	char pays[32];
+	char profession[25];
+	char pays[25];
 	int nb_credit;
 	enum connu_panoply connaissance;
 	struct abonnement abonnement_suivi;
@@ -131,14 +131,14 @@ struct compte {
 typedef struct compte compte;
 
 struct list_account {
-	struct compte cmpt[250];
+	struct compte cmpt[5];
 	int nbCompte;
 };
 typedef struct list_account list_account;
 
 struct cart {
 	int id_cart;
-	struct article list_article[50];
+	struct article list_article[5];
 	int nbArticle;
 	int rent_price_credit;
 	int rent_price_euros;
@@ -149,7 +149,7 @@ struct cart {
 typedef struct cart cart;
 
 struct historiqueCommande {
-	struct cart listCommande[50];
+	struct cart listCommande[5];
 	int nbCommande;
 };
 typedef struct historiqueCommande historiqueCommande;

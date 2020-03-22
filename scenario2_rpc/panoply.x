@@ -8,7 +8,7 @@ struct abonnement {
 };
 
 struct list_abonnement{
-    struct abonnement abonnements[15];
+    struct abonnement abonnements[5];
     int nb_different_abonnement;
 };
 
@@ -17,11 +17,11 @@ struct list_abonnement{
 
 struct collection {
     int id_collection;
-    char nom_collection[50];
+    char nom_collection[20];
 };
 
 struct list_collection {
-    struct collection collection[15];
+    struct collection collection[5];
     int nb_different_collection;
 };
 /*-------------------------------------------*/
@@ -29,12 +29,12 @@ struct list_collection {
 
 struct brand{
     int id_brand;
-    char brand_name[32];
-    char description[3000];
+    char brand_name[20];
+    char description[20];
 };
 
 struct list_brand{
-    struct brand brands[15];
+    struct brand brands[5];
     int nb_different_brand;
 };
 
@@ -51,7 +51,7 @@ enum point_livraison{
 struct article {
     int id_article;
     char nom[32];
-    int taille[20];
+    int taille[5];
     enum point_livraison pt_livraison;
     int prix_location;
     struct collection collection_reference;
@@ -61,7 +61,7 @@ struct article {
 };
 
 struct article_list{
-    struct article article[15];
+    struct article article[5];
     int nb_different_article;
 };
 /*-------------------------------------------*/
@@ -76,11 +76,11 @@ enum connu_panoply {
 };
 
 struct mail {
-	char email[128] ;
+	char email[25] ;
 };
 
 struct mot_de_passe{
-	char mdp[32] ;
+	char mdp[25] ;
 };
 
 struct date {
@@ -98,12 +98,12 @@ struct compte {
     int id_compte;
 	struct mail email;
 	struct mot_de_passe mdp;
-	char nom[32];
-	char prenom[32];
+	char nom[25];
+	char prenom[25];
 	struct date date_de_naissance;
 	int telephone;
-	char profession[64];
-	char pays[32];
+	char profession[25];
+	char pays[25];
     int nb_credit;
 	enum connu_panoply connaissance;
     struct abonnement abonnement_suivi;
@@ -111,7 +111,7 @@ struct compte {
 };
 
 struct list_account{
-    struct compte cmpt[15];
+    struct compte cmpt[5];
     int nbCompte;
 };
 
@@ -120,7 +120,7 @@ struct list_account{
 /* Order management */
 struct cart{
     int id_cart;
-    struct article list_article[15];
+    struct article list_article[5];
     int nbArticle;
     int rent_price_credit;
     int rent_price_euros;
@@ -130,7 +130,7 @@ struct cart{
 };
 
 struct historiqueCommande {
-    struct cart listCommande[15];
+    struct cart listCommande[5];
     int nbCommande;
 };
 /*-------------------------------------------*/

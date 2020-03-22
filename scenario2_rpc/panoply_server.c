@@ -70,7 +70,7 @@ init_1_svc(void *argp, struct svc_req *rqstp)
         strcpy(database->marques.brands[1].description,"Formé aux côtés de Hedi Slimane chez Dior, Alexis Mabille s'intéresse particulièrement à l'androgynie et aux frontières du masculin et du féminin. Il lance sa griffe en 2005 et crée des collections unisexes remarquées du milieu de la mode. Il revisite le nœud papillon en jouant sur les volumes et cet accessoire désuet devient sa marque de fabrique.");
 
     /*init articles*/
-    database->articles.nb_different_article=5;
+    database->articles.nb_different_article=1;
    
        /* ~Article n°1~ */
        database->articles.article[0].id_article = 0; 
@@ -124,6 +124,7 @@ create_account_1_svc(compte *argp, struct svc_req *rqstp)
 	database->comptes.cmpt[database->comptes.nbCompte].id_compte=database->comptes.nbCompte;
 	result=database->comptes.cmpt[database->comptes.nbCompte];
 	database->comptes.nbCompte++;
+	printf("Ajout du profil d'id : %d",database->comptes.nbCompte);
 	printf("Fin création de compte\n");
 
 	return &result;
@@ -133,7 +134,6 @@ int *
 log_in_1_svc(identifiants *argp, struct svc_req *rqstp)
 {
 	static int  result;
-
 	printf("---------------------------------------------------\n");
 	result=-1;
 	printf("Connexion\n");
@@ -157,6 +157,7 @@ list_collection *
 list_all_collection_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static list_collection  result;
+
 	printf("---------------------------------------------------\n");
     printf("Liste les collections\n");
 	printf("Nombre de collections %d\n",database->collections.nb_different_collection);
@@ -164,7 +165,8 @@ list_all_collection_1_svc(void *argp, struct svc_req *rqstp)
         printf("%s \n",database->collections.collection[i].nom_collection);
     }
 	result=database->collections;
-    printf("Fin liste collection of size %d\n", result.nb_different_collection);
+    printf("Fin liste collection\n");
+
 	return &result;
 }
 
@@ -204,9 +206,10 @@ remove_cloth_to_collection_1_svc(article *argp, struct svc_req *rqstp)
 	printf("---------------------------------------------------\n");
     printf("Enlevement d'un article\n");
     article intermediare;
-    int id_removable_article;
+    int id_removable_article=argp->id_article;
     database->articles.nb_different_article--;
-    //remonte l'article dans la liste jusqu'à ce qu'il ne soit plus accessible par le nb d'article
+	printf("Nombre d'articles dans la colection : %d\n",database->articles.nb_different_article);
+    //remonte l'article dans la liste jusqu'à ce qu'il ne soit plus accessible par le nb d'article si et seulement si celui ci n'est pas le dernier article ajoute
 	for (int i=id_removable_article ; i<database->articles.nb_different_article ; i++){
         printf("    ID article before : %d\n",database->articles.article[i].id_article);
         intermediare = database->articles.article[i];
@@ -219,6 +222,7 @@ remove_cloth_to_collection_1_svc(article *argp, struct svc_req *rqstp)
     }
 
     printf("Enlevement termine\n");
+
 	return (void *) &result;
 }
 
@@ -226,8 +230,14 @@ list_account *
 display_abonnement_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static list_account  result;
-
+	printf("---------------------------------------------------\n");
+	printf("Recuperation des comptes\n");
+	printf("Nombre de collections %d\n",database->comptes.nbCompte);
+    for (int i=0 ; i<database->comptes.nbCompte ; i++){
+        printf("%s \n",database->comptes.cmpt[i].email.email);
+    }
 	result=database->comptes;
+	printf("Fin recuperation des comptes\n");
 
 	return &result;
 }

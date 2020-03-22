@@ -29,7 +29,7 @@ xdr_list_abonnement (XDR *xdrs, list_abonnement *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->abonnements, 30,
+	 if (!xdr_vector (xdrs, (char *)objp->abonnements, 5,
 		sizeof (abonnement), (xdrproc_t) xdr_abonnement))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nb_different_abonnement))
@@ -45,7 +45,7 @@ xdr_collection (XDR *xdrs, collection *objp)
 	int i;
 	 if (!xdr_int (xdrs, &objp->id_collection))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->nom_collection, 50,
+	 if (!xdr_vector (xdrs, (char *)objp->nom_collection, 20,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	return TRUE;
@@ -57,7 +57,7 @@ xdr_list_collection (XDR *xdrs, list_collection *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->collection, 50,
+	 if (!xdr_vector (xdrs, (char *)objp->collection, 5,
 		sizeof (collection), (xdrproc_t) xdr_collection))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nb_different_collection))
@@ -73,10 +73,10 @@ xdr_brand (XDR *xdrs, brand *objp)
 	int i;
 	 if (!xdr_int (xdrs, &objp->id_brand))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->brand_name, 32,
+	 if (!xdr_vector (xdrs, (char *)objp->brand_name, 20,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->description, 3000,
+	 if (!xdr_vector (xdrs, (char *)objp->description, 20,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	return TRUE;
@@ -88,7 +88,7 @@ xdr_list_brand (XDR *xdrs, list_brand *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->brands, 124,
+	 if (!xdr_vector (xdrs, (char *)objp->brands, 5,
 		sizeof (brand), (xdrproc_t) xdr_brand))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nb_different_brand))
@@ -119,9 +119,9 @@ xdr_article (XDR *xdrs, article *objp)
 		 if (!xdr_vector (xdrs, (char *)objp->nom, 32,
 			sizeof (char), (xdrproc_t) xdr_char))
 			 return FALSE;
-		buf = XDR_INLINE (xdrs, ( 20 ) * BYTES_PER_XDR_UNIT);
+		buf = XDR_INLINE (xdrs, ( 5 ) * BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
-			 if (!xdr_vector (xdrs, (char *)objp->taille, 20,
+			 if (!xdr_vector (xdrs, (char *)objp->taille, 5,
 				sizeof (int), (xdrproc_t) xdr_int))
 				 return FALSE;
 
@@ -130,7 +130,7 @@ xdr_article (XDR *xdrs, article *objp)
 			register int *genp;
 
 			for (i = 0, genp = objp->taille;
-				i < 20; ++i) {
+				i < 5; ++i) {
 				IXDR_PUT_LONG(buf, *genp++);
 			}
 		}
@@ -154,9 +154,9 @@ xdr_article (XDR *xdrs, article *objp)
 		 if (!xdr_vector (xdrs, (char *)objp->nom, 32,
 			sizeof (char), (xdrproc_t) xdr_char))
 			 return FALSE;
-		buf = XDR_INLINE (xdrs, ( 20 ) * BYTES_PER_XDR_UNIT);
+		buf = XDR_INLINE (xdrs, ( 5 ) * BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
-			 if (!xdr_vector (xdrs, (char *)objp->taille, 20,
+			 if (!xdr_vector (xdrs, (char *)objp->taille, 5,
 				sizeof (int), (xdrproc_t) xdr_int))
 				 return FALSE;
 
@@ -165,7 +165,7 @@ xdr_article (XDR *xdrs, article *objp)
 			register int *genp;
 
 			for (i = 0, genp = objp->taille;
-				i < 20; ++i) {
+				i < 5; ++i) {
 				*genp++ = IXDR_GET_LONG(buf);
 			}
 		}
@@ -190,7 +190,7 @@ xdr_article (XDR *xdrs, article *objp)
 	 if (!xdr_vector (xdrs, (char *)objp->nom, 32,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->taille, 20,
+	 if (!xdr_vector (xdrs, (char *)objp->taille, 5,
 		sizeof (int), (xdrproc_t) xdr_int))
 		 return FALSE;
 	 if (!xdr_point_livraison (xdrs, &objp->pt_livraison))
@@ -214,7 +214,7 @@ xdr_article_list (XDR *xdrs, article_list *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->article, 150,
+	 if (!xdr_vector (xdrs, (char *)objp->article, 5,
 		sizeof (article), (xdrproc_t) xdr_article))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nb_different_article))
@@ -238,7 +238,7 @@ xdr_mail (XDR *xdrs, mail *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->email, 128,
+	 if (!xdr_vector (xdrs, (char *)objp->email, 25,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	return TRUE;
@@ -250,7 +250,7 @@ xdr_mot_de_passe (XDR *xdrs, mot_de_passe *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->mdp, 32,
+	 if (!xdr_vector (xdrs, (char *)objp->mdp, 25,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	return TRUE;
@@ -294,20 +294,20 @@ xdr_compte (XDR *xdrs, compte *objp)
 		 return FALSE;
 	 if (!xdr_mot_de_passe (xdrs, &objp->mdp))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->nom, 32,
+	 if (!xdr_vector (xdrs, (char *)objp->nom, 25,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->prenom, 32,
+	 if (!xdr_vector (xdrs, (char *)objp->prenom, 25,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	 if (!xdr_date (xdrs, &objp->date_de_naissance))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->telephone))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->profession, 64,
+	 if (!xdr_vector (xdrs, (char *)objp->profession, 25,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->pays, 32,
+	 if (!xdr_vector (xdrs, (char *)objp->pays, 25,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nb_credit))
@@ -327,7 +327,7 @@ xdr_list_account (XDR *xdrs, list_account *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->cmpt, 250,
+	 if (!xdr_vector (xdrs, (char *)objp->cmpt, 5,
 		sizeof (compte), (xdrproc_t) xdr_compte))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nbCompte))
@@ -345,7 +345,7 @@ xdr_cart (XDR *xdrs, cart *objp)
 	if (xdrs->x_op == XDR_ENCODE) {
 		 if (!xdr_int (xdrs, &objp->id_cart))
 			 return FALSE;
-		 if (!xdr_vector (xdrs, (char *)objp->list_article, 50,
+		 if (!xdr_vector (xdrs, (char *)objp->list_article, 5,
 			sizeof (article), (xdrproc_t) xdr_article))
 			 return FALSE;
 		buf = XDR_INLINE (xdrs, 3 * BYTES_PER_XDR_UNIT);
@@ -372,7 +372,7 @@ xdr_cart (XDR *xdrs, cart *objp)
 	} else if (xdrs->x_op == XDR_DECODE) {
 		 if (!xdr_int (xdrs, &objp->id_cart))
 			 return FALSE;
-		 if (!xdr_vector (xdrs, (char *)objp->list_article, 50,
+		 if (!xdr_vector (xdrs, (char *)objp->list_article, 5,
 			sizeof (article), (xdrproc_t) xdr_article))
 			 return FALSE;
 		buf = XDR_INLINE (xdrs, 3 * BYTES_PER_XDR_UNIT);
@@ -400,7 +400,7 @@ xdr_cart (XDR *xdrs, cart *objp)
 
 	 if (!xdr_int (xdrs, &objp->id_cart))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->list_article, 50,
+	 if (!xdr_vector (xdrs, (char *)objp->list_article, 5,
 		sizeof (article), (xdrproc_t) xdr_article))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nbArticle))
@@ -424,7 +424,7 @@ xdr_historiqueCommande (XDR *xdrs, historiqueCommande *objp)
 	register int32_t *buf;
 
 	int i;
-	 if (!xdr_vector (xdrs, (char *)objp->listCommande, 50,
+	 if (!xdr_vector (xdrs, (char *)objp->listCommande, 5,
 		sizeof (cart), (xdrproc_t) xdr_cart))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->nbCommande))

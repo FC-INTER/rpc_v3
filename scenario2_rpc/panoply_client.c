@@ -18,7 +18,7 @@ service_panoply_1(char *host)
 	int  *result_3;
 	identifiants  log_in_1_arg;
 	list_collection  *result_4;
-	char *list_all_collection_1_arg = NULL;
+	char *list_all_collection_1_arg;
 	void  *result_5;
 	article  new_cloth;
 	void  *result_6;
@@ -40,7 +40,6 @@ service_panoply_1(char *host)
 	result_1 = init_1((void*)&init_1_arg, clnt);
 	if (result_1 == (void *) NULL) {
 		clnt_perror (clnt, "call failed");
-		return;
 	}
 
 	printf("Fin initialization de la base de donnee\n");
@@ -68,22 +67,11 @@ service_panoply_1(char *host)
 	strcpy(create_account_1_arg.pays,"france");
     create_account_1_arg.nb_credit=0;	
 	printf("conu - Une_recherche_en_ligne\n");
-
 	create_account_1_arg.connaissance=2;
-
-	create_account_1_arg.abonnement_suivi.id_abo =0;
-	memset(create_account_1_arg.abonnement_suivi.type_abo, '\0', 30);
-	create_account_1_arg.abonnement_suivi.prix_abo=0;
-	create_account_1_arg.abonnement_suivi.credit_abo=0;
-	create_account_1_arg.date_abonnement.jour = 0;
-	create_account_1_arg.date_abonnement.mois = 0;
-	create_account_1_arg.date_abonnement.annee = 0;
-	
 
 	result_2 = create_account_1(&create_account_1_arg, clnt);
 	if (result_2 == (compte *) NULL) {
 		clnt_perror (clnt, "call failed");
-		return;
 	}
 	printf("Fin création compte\n");
 
@@ -91,16 +79,14 @@ service_panoply_1(char *host)
 
 
 	printf("Connexion\n");
-	printf("adresse mail : tomkimsour@hotmail.fr\n");
+	printf("Adresse mail : tomkimsour@hotmail.fr\n");
 	strcpy(log_in_1_arg.email.email,"tomkimsour@hotmail.fr");
-	printf("mot de passe : tom\n");
+	printf("Mot de passe : tom\n");
 	strcpy(log_in_1_arg.mdp.mdp,"tom");	
 	result_3 = log_in_1(&log_in_1_arg, clnt);
 	if (result_3 == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
-		return;
 	}
-	printf("id utilisateur : %d\n", *result_3);
 	printf("Fin connexion\n");
 
 	printf("---------------------------------------------------\n");
@@ -109,7 +95,6 @@ service_panoply_1(char *host)
 	result_4 = list_all_collection_1((void*)&list_all_collection_1_arg, clnt);
 	if (result_4 == (list_collection *) NULL) {
 		clnt_perror (clnt, "call failed");
-		return;
 	}
 	for (int i=0;i<result_4->nb_different_collection;i++){
 		printf("%d - %s\n",result_4->collection[i].id_collection,result_4->collection[i].nom_collection);
@@ -117,7 +102,7 @@ service_panoply_1(char *host)
 	printf("Fin d'affichage des collections \n");
 
 	printf("---------------------------------------------------\n");
-	
+
 	printf("Ajout d'un article à la collection Robes mini\n");
 	new_cloth.id_article=2;
 	strcpy(new_cloth.nom,"Black dress");
@@ -127,24 +112,23 @@ service_panoply_1(char *host)
 	new_cloth.taille[3]=-1;        
 	new_cloth.pt_livraison=1;
 	new_cloth.prix_location=62;       
-	new_cloth.collection_reference.id_collection=1;                   
+	new_cloth.collection_reference.id_collection=0;                   
 	new_cloth.brand_reference.id_brand=1;
 	new_cloth.credit=1;
 	new_cloth.stock=15;
+
 	result_5 = add_cloth_to_collection_1(&new_cloth, clnt);
 	if (result_5 == (void *) NULL) {
 		clnt_perror (clnt, "call failed");
-		return;
 	}
 	printf("ajout termine \n");
 
 	printf("---------------------------------------------------\n");
 
 	printf("Enlevement du dernier article de la bdd \n");
-	result_6 = remove_cloth_to_collection_1(&new_cloth, clnt);
+	result_6 = remove_cloth_to_collection_1(&remove_cloth_to_collection_1_arg, clnt);
 	if (result_6 == (void *) NULL) {
 		clnt_perror (clnt, "call failed");
-		return;
 	}
 	printf("Enlevement du dernier article de la bdd termine\n");
 
@@ -154,8 +138,8 @@ service_panoply_1(char *host)
 	result_7 = display_abonnement_1((void*)&display_abonnement_1_arg, clnt);
 	if (result_7 == (list_account *) NULL) {
 		clnt_perror (clnt, "call failed");
-		return;
 	}
+	printf("nb compte : %d\n",result_7->nbCompte);
 	for (int i=0 ; i<result_7->nbCompte;i++){
 		printf("Compte n°%d : %s\n",result_7->cmpt[i].id_compte+1,result_7->cmpt[i].abonnement_suivi.type_abo);
 	}
